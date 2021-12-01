@@ -9,6 +9,8 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class PlaySongs extends AppCompatActivity implements SensorEventListener {
 
@@ -16,13 +18,20 @@ public class PlaySongs extends AppCompatActivity implements SensorEventListener 
     SensorManager sensorManagerHum;
     private Sensor tempSensor;
     private Sensor humiditySensor;
-    int myTemp = 0;
+    ImageView weatherIcon;
+    TextView tempText;
+    TextView humidityText;
+    float myTemp = 0;
     int myHumidity =0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_songs);
+
+        weatherIcon = (ImageView) findViewById(R.id.weatherIcon);
+        tempText = findViewById(R.id.tempText);
+        humidityText = findViewById(R.id.humidityText);
 
         sensorManagerTemp = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
         sensorManagerTemp.registerListener(this, sensorManagerTemp.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE), sensorManagerTemp.SENSOR_DELAY_NORMAL );
@@ -38,15 +47,48 @@ public class PlaySongs extends AppCompatActivity implements SensorEventListener 
         Sensor sensor = sensorEvent.sensor;
 
         if (sensor.getType() == Sensor.TYPE_AMBIENT_TEMPERATURE) {
-            myTemp = (int)sensorEvent.values[0];
+            myTemp = (sensorEvent.values[0] * 1.8f) + 32;
+
         }
         else if (sensor.getType() == Sensor.TYPE_RELATIVE_HUMIDITY)
         {
             myHumidity = (int)sensorEvent.values[0];
         }
 
+        if(myTemp > 100 && myHumidity > 30)
+            GlobalVariables.heatIndex = 5;
+        else if(myTemp > 80 && myHumidity > 20)
+            GlobalVariables.heatIndex = 4;
+        else if(myTemp > 65 && myHumidity > 10)
+            GlobalVariables.heatIndex = 3;
+        else if(myTemp > 50 && myHumidity > 0)
+            GlobalVariables.heatIndex = 2;
+        else if(myTemp < 50 || myHumidity < 0)
+            GlobalVariables.heatIndex = 1;
+        tempText.setText(""+ myTemp + "° F");
+        humidityText.setText(""+ myHumidity + "% Humidity");
 
-        Log.d("EXAMPLE My Temp is: "  , " TEMP: " + myTemp + " my humidity is: " + myHumidity);
+        switch(GlobalVariables.heatIndex)
+        {
+            case 1:
+                weatherIcon.setImageResource(R.drawable.freezing);
+                break;
+            case 2:
+                weatherIcon.setImageResource(R.drawable.cold);
+                break;
+            case 3:
+                weatherIcon.setImageResource(R.drawable.chill);
+                break;
+            case 4:
+                weatherIcon.setImageResource(R.drawable.warm);
+                break;
+            case 5:
+                weatherIcon.setImageResource(R.drawable.hot);
+                break;
+            default:
+                break;
+        }
+        Log.d("EXAMPLE My Temp is: "  , " TEMP: " + myTemp + " my humidity is: " + myHumidity + " HEAT INDEX IS: " + GlobalVariables.heatIndex);
     }
 
     @Override
