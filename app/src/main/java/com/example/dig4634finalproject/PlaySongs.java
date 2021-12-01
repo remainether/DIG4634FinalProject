@@ -7,10 +7,13 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 public class PlaySongs extends AppCompatActivity implements SensorEventListener {
 
@@ -28,6 +31,17 @@ public class PlaySongs extends AppCompatActivity implements SensorEventListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_songs);
+
+        MediaController mediaController = new MediaController(this);
+        final VideoView videoView = findViewById(R.id.videoView);
+        Uri uri = Uri.parse("https://static.videezy.com/system/resources/previews/000/040/193/original/bg_0004.mp4");
+
+        //mediaController.setAnchorView(videoView);
+        //videoView.setMediaController(mediaController);
+
+        videoView.setVideoURI(uri);
+        videoView.requestFocus();
+        videoView.start();
 
         weatherIcon = (ImageView) findViewById(R.id.weatherIcon);
         tempText = findViewById(R.id.tempText);
