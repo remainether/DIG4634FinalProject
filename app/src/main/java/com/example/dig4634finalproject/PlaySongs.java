@@ -85,19 +85,19 @@ public class PlaySongs extends AppCompatActivity implements SensorEventListener 
         switch(GlobalVariables.heatIndex)
         {
             case 1:
-                weatherIcon.setImageResource(R.drawable.freezing);
+                weatherIcon.setImageResource(R.drawable.freezingg);
                 break;
             case 2:
-                weatherIcon.setImageResource(R.drawable.cold);
+                weatherIcon.setImageResource(R.drawable.coldd);
                 break;
             case 3:
-                weatherIcon.setImageResource(R.drawable.chill);
+                weatherIcon.setImageResource(R.drawable.chilll);
                 break;
             case 4:
-                weatherIcon.setImageResource(R.drawable.warm);
+                weatherIcon.setImageResource(R.drawable.warmm);
                 break;
             case 5:
-                weatherIcon.setImageResource(R.drawable.hot);
+                weatherIcon.setImageResource(R.drawable.hott);
                 break;
             default:
                 break;
