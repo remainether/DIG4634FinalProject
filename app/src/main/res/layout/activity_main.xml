@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/mainbg"
         android:layout_width="570dp"
         android:layout_height="1015dp"
         app:layout_constraintBottom_toBottomOf="parent"
