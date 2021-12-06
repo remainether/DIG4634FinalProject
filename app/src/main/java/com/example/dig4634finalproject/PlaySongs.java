@@ -1,8 +1,5 @@
 package com.example.dig4634finalproject;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -17,6 +14,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.gauravk.audiovisualizer.visualizer.WaveVisualizer;
 
@@ -33,7 +33,7 @@ public class PlaySongs extends AppCompatActivity implements SensorEventListener 
     float myTemp = 0;
     int myHumidity =0;
     Button playBtn, pauseBtn, stopBtn;
-
+    int prevIndex  = 3;
     MediaPlayer mediaPlayer;
 
     WaveVisualizer waveVisualizer;
@@ -69,6 +69,7 @@ public class PlaySongs extends AppCompatActivity implements SensorEventListener 
             @Override
             public void onClick(View v) {
                 if(mediaPlayer == null){
+
                     mediaPlayer = MediaPlayer.create(PlaySongs.this, R.raw.hot);
                     int audioSessionId = mediaPlayer.getAudioSessionId();
                     if(audioSessionId != -1){
@@ -121,19 +122,46 @@ public class PlaySongs extends AppCompatActivity implements SensorEventListener 
             myHumidity = (int)sensorEvent.values[0];
         }
 
-        if(myTemp > 100 && myHumidity > 30 )
+        if(myTemp > 100 && myHumidity > 30 ) {
             weatherIcon.setImageResource(R.drawable.hott);
-        else if(myTemp > 80 && myHumidity > 20)
+            //mediaPlayer = MediaPlayer.create(PlaySongs.this, R.raw.hot);
+            GlobalVariables.heatIndex = 5;
+
+        }
+        else if(myTemp > 80 && myHumidity > 20) {
             weatherIcon.setImageResource(R.drawable.warmm);
-        else if(myTemp > 65 && myHumidity > 10)
+            //mediaPlayer =  MediaPlayer.create(PlaySongs.this, R.raw.warm);
+            GlobalVariables.heatIndex = 4;
+
+        }
+        else if(myTemp > 65 && myHumidity > 10) {
             weatherIcon.setImageResource(R.drawable.chilll);
-        else if(myTemp > 50 && myHumidity > 0)
+            //mediaPlayer =  MediaPlayer.create(PlaySongs.this, R.raw.chill);
+            GlobalVariables.heatIndex = 3;
+
+        }
+        else if(myTemp > 50 && myHumidity > 0) {
             weatherIcon.setImageResource(R.drawable.coldd);
-        else if(myTemp < 50 || myHumidity < 0)
+            //mediaPlayer =  MediaPlayer.create(PlaySongs.this, R.raw.cold);
+            GlobalVariables.heatIndex = 2;
+
+        }
+        else if(myTemp < 50 || myHumidity < 0) {
             weatherIcon.setImageResource(R.drawable.freezingg);
+            //mediaPlayer = MediaPlayer.create(PlaySongs.this, R.raw.freezing);
+            GlobalVariables.heatIndex = 1;
+
+        }
         tempText.setText(""+ myTemp + "° F");
         humidityText.setText(""+ myHumidity + "% Humidity");
 
+
+        if(prevIndex != GlobalVariables.heatIndex)
+        {
+            changeSong();
+        }
+
+        prevIndex = GlobalVariables.heatIndex;
         /*
         switch(GlobalVariables.heatIndex)
         {
@@ -158,6 +186,51 @@ public class PlaySongs extends AppCompatActivity implements SensorEventListener 
 
          */
         Log.d("EXAMPLE My Temp is: "  , " TEMP: " + myTemp + " my humidity is: " + myHumidity + " HEAT INDEX IS: " + GlobalVariables.heatIndex);
+    }
+
+    public void changeSong()
+    {
+        int song = 3;
+
+        if(GlobalVariables.heatIndex == 1)
+        {
+            song = R.raw.freezing;
+        }
+        else if(GlobalVariables.heatIndex == 2)
+        {
+            song = R.raw.cold;
+        }
+        else if(GlobalVariables.heatIndex == 3)
+        {
+            song = R.raw.chill;
+        }
+        else if(GlobalVariables.heatIndex == 4)
+        {
+            song = R.raw.warm;
+        }
+        else if(GlobalVariables.heatIndex == 5)
+        {
+            song = R.raw.hot;
+        }
+
+        if(mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+            waveVisualizer.release();
+        }
+
+        if(mediaPlayer == null){
+
+            mediaPlayer = MediaPlayer.create(PlaySongs.this, song);
+            int audioSessionId = mediaPlayer.getAudioSessionId();
+            if(audioSessionId != -1){
+                waveVisualizer.setAudioSessionId(audioSessionId);
+
+            }
+
+        }
+        mediaPlayer.start();
+
     }
 
     @Override
