@@ -1,6 +1,7 @@
 package com.example.dig4634finalproject;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
@@ -11,6 +12,8 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,17 +31,20 @@ public class PlaySongs extends AppCompatActivity implements SensorEventListener 
     private Sensor tempSensor;
     private Sensor humiditySensor;
     ImageView weatherIcon;
+    ImageView albumCovers;
     TextView tempText;
     TextView humidityText;
+    TextView songName;
     float myTemp = 0;
     int myHumidity =0;
-    Button playBtn, pauseBtn, stopBtn;
+    Button playBtn, pauseBtn, stopBtn, heartBtn;
     int prevIndex  = 3;
     MediaPlayer mediaPlayer;
 
     WaveVisualizer waveVisualizer;
 
 
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,10 +55,23 @@ public class PlaySongs extends AppCompatActivity implements SensorEventListener 
         waveVisualizer = findViewById(R.id.blast);
 
         weatherIcon = (ImageView) findViewById(R.id.weatherIcon);
+        albumCovers = (ImageView) findViewById(R.id.albumCovers);
         tempText = findViewById(R.id.tempText);
         humidityText = findViewById(R.id.humidityText);
+        songName = findViewById(R.id.songName);
 
-            sensorManagerTemp = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
+        Animation slide_down = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down);
+        weatherIcon.startAnimation(slide_down);
+        Animation fadein = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down);
+        tempText.startAnimation(fadein);
+        humidityText.startAnimation(fadein);
+        albumCovers.startAnimation(fadein);
+        Animation half_down_fade = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.half_down_fade);
+        playBtn.startAnimation(half_down_fade);
+        pauseBtn.startAnimation(half_down_fade);
+        stopBtn.startAnimation(half_down_fade);
+
+        sensorManagerTemp = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
         sensorManagerTemp.registerListener(this, sensorManagerTemp.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE), sensorManagerTemp.SENSOR_DELAY_NORMAL );
 
         sensorManagerHum = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
@@ -124,30 +143,40 @@ public class PlaySongs extends AppCompatActivity implements SensorEventListener 
 
         if(myTemp > 100 && myHumidity > 30 ) {
             weatherIcon.setImageResource(R.drawable.hott);
+            albumCovers.setImageResource(R.drawable.hotalbum);
+            songName.setText("Auga Viva by iZem, Nina Miranda");
             //mediaPlayer = MediaPlayer.create(PlaySongs.this, R.raw.hot);
             GlobalVariables.heatIndex = 5;
 
         }
         else if(myTemp > 80 && myHumidity > 20) {
             weatherIcon.setImageResource(R.drawable.warmm);
+            albumCovers.setImageResource(R.drawable.warmalbum);
+            songName.setText("Vanille fraise by L’Imperatrice");
             //mediaPlayer =  MediaPlayer.create(PlaySongs.this, R.raw.warm);
             GlobalVariables.heatIndex = 4;
 
         }
         else if(myTemp > 65 && myHumidity > 10) {
             weatherIcon.setImageResource(R.drawable.chilll);
+            albumCovers.setImageResource(R.drawable.chillalbum);
+            songName.setText("There Will Be Rain by Million Eyes");
             //mediaPlayer =  MediaPlayer.create(PlaySongs.this, R.raw.chill);
             GlobalVariables.heatIndex = 3;
 
         }
         else if(myTemp > 50 && myHumidity > 0) {
             weatherIcon.setImageResource(R.drawable.coldd);
+            albumCovers.setImageResource(R.drawable.coldalbum);
+            songName.setText("Your Name by Bernache");
             //mediaPlayer =  MediaPlayer.create(PlaySongs.this, R.raw.cold);
             GlobalVariables.heatIndex = 2;
 
         }
         else if(myTemp < 50 || myHumidity < 0) {
             weatherIcon.setImageResource(R.drawable.freezingg);
+            albumCovers.setImageResource(R.drawable.freezingalbum);
+            songName.setText("Smile From U. by Jinsang");
             //mediaPlayer = MediaPlayer.create(PlaySongs.this, R.raw.freezing);
             GlobalVariables.heatIndex = 1;
 

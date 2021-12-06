@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/favBtn"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".PlaySongs">
@@ -17,20 +18,20 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/playButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="628dp"
         android:backgroundTint="@android:color/black"
         android:fontFamily="monospace"
-        android:text="Pause/Play"
+        android:text="Play"
+        app:layout_constraintBottom_toBottomOf="@+id/blast"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.919" />
 
     <Button
         android:id="@+id/pauseButton"
@@ -65,7 +66,6 @@
         android:id="@+id/constraintLayout"
         android:layout_width="406dp"
         android:layout_height="141dp"
-        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -75,52 +75,81 @@
             android:id="@+id/tempText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="320dp"
             android:text="TextView"
             android:textAlignment="center"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/humidityText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.765"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.337" />
+            app:layout_constraintVertical_bias="0.769" />
 
         <TextView
             android:id="@+id/humidityText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
             android:text="TextView"
             android:textAlignment="center"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.765"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.595" />
+            app:layout_constraintVertical_bias="0.666" />
+
+        <ImageView
+            android:id="@+id/weatherIcon"
+            android:layout_width="195dp"
+            android:layout_height="148dp"
+            app:srcCompat="@drawable/chill" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageButton
-        android:id="@+id/heartButton"
-        android:layout_width="51dp"
-        android:layout_height="57dp"
-        android:layout_marginBottom="128dp"
-        android:background="#00FFFFFF"
-        android:cropToPadding="false"
-        android:scaleType="fitCenter"
-        android:src="@drawable/redheart"
+    <ToggleButton
+        android:id="@+id/favButton"
+        android:layout_width="66dp"
+        android:layout_height="58dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="124dp"
+        android:layout_weight="0.33"
+        android:background="@drawable/toggle_image"
+        android:text="fav"
+        android:textOff=""
+        android:textOn=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.922"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:layout_constraintHorizontal_bias="0.866"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/weatherIcon"
-        android:layout_width="393dp"
-        android:layout_height="157dp"
+        android:id="@+id/albumCovers"
+        android:layout_width="253dp"
+        android:layout_height="255dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/chill"
-        tools:layout_editor_absoluteX="2dp" />
+        app:layout_constraintVertical_bias="0.403"
+        app:srcCompat="@drawable/hotalbum" />
 
+    <TextView
+        android:id="@+id/songName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="70dp"
+        android:layout_marginEnd="70dp"
+        android:background="#000000"
+        android:fontFamily="monospace"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/albumCovers"
+        app:layout_constraintVertical_bias="0.114" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

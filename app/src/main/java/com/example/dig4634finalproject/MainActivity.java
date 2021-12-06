@@ -22,6 +22,9 @@ public class MainActivity extends AppCompatActivity {
             ImageView bg= (ImageView)findViewById(R.id.mainbg);
             Animation myFadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fadein);
             bg.startAnimation(myFadeInAnimation);
+            Animation half_down_fade = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.half_down_fade);
+            btn.startAnimation(half_down_fade);
+            btn2.startAnimation(half_down_fade);
 
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
