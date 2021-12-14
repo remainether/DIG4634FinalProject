@@ -194,6 +194,7 @@ public class PlaySongs extends AppCompatActivity implements SensorEventListener 
             albumCovers.setImageResource(R.drawable.hotalbum);
 
             songName.setText("Auga Viva by iZem, Nina Miranda");
+            getSongName = "★ Auga Viva by iZem, Nina Miranda";
             //mediaPlayer = MediaPlayer.create(PlaySongs.this, R.raw.hot);
             GlobalVariables.heatIndex = 5;
 
@@ -202,7 +203,7 @@ public class PlaySongs extends AppCompatActivity implements SensorEventListener 
             weatherIcon.setImageResource(R.drawable.warmm);
             albumCovers.setImageResource(R.drawable.warmalbum);
             songName.setText("Vanille fraise by L’Imperatrice");
-            getSongName = "Vanille fraise by L’Imperatrice";
+            getSongName = "★ Vanille fraise by L’Imperatrice";
             //mediaPlayer =  MediaPlayer.create(PlaySongs.this, R.raw.warm);
             GlobalVariables.heatIndex = 4;
 
@@ -211,7 +212,7 @@ public class PlaySongs extends AppCompatActivity implements SensorEventListener 
             weatherIcon.setImageResource(R.drawable.chilll);
             albumCovers.setImageResource(R.drawable.chillalbum);
             songName.setText("There Will Be Rain by Million Eyes");
-            getSongName = "There Will Be Rain by Million Eyes";
+            getSongName = "★ There Will Be Rain by Million Eyes";
             //mediaPlayer =  MediaPlayer.create(PlaySongs.this, R.raw.chill);
             GlobalVariables.heatIndex = 3;
 
@@ -220,7 +221,7 @@ public class PlaySongs extends AppCompatActivity implements SensorEventListener 
             weatherIcon.setImageResource(R.drawable.coldd);
             albumCovers.setImageResource(R.drawable.coldalbum);
             songName.setText("Your Name by Bernache");
-            getSongName = "Your Name by Bernache";
+            getSongName = "★ Your Name by Bernache";
             //mediaPlayer =  MediaPlayer.create(PlaySongs.this, R.raw.cold);
             GlobalVariables.heatIndex = 2;
 
@@ -229,7 +230,7 @@ public class PlaySongs extends AppCompatActivity implements SensorEventListener 
             weatherIcon.setImageResource(R.drawable.freezingg);
             albumCovers.setImageResource(R.drawable.freezingalbum);
             songName.setText("Smile From U. by Jinsang");
-            getSongName = "Smile From U. by Jinsang";
+            getSongName = "★ Smile From U. by Jinsang";
             //mediaPlayer = MediaPlayer.create(PlaySongs.this, R.raw.freezing);
             GlobalVariables.heatIndex = 1;
 
