@@ -94,6 +94,12 @@ public class PlaySongs extends AppCompatActivity implements SensorEventListener 
         sensorManagerHum = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
         sensorManagerHum.registerListener(this, sensorManagerHum.getDefaultSensor(Sensor.TYPE_RELATIVE_HUMIDITY), sensorManagerHum.SENSOR_DELAY_NORMAL );
 
+
+        tempText.setText("");
+        humidityText.setText("");
+        songName.setText("");
+
+
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)!= PackageManager.PERMISSION_GRANTED){
 
             requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO},1);
