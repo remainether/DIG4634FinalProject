@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/User/Documents/GitHub/DIG4634FinalProject/app/src/main/res/layout/activity_liked_songs.xml" value="0.22" />
+        <entry key="..\:/Users/User/Documents/GitHub/DIG4634FinalProject/app/src/main/res/layout/activity_play_songs.xml" value="0.2694746376811594" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1390625" />
         <entry key="app/src/main/res/drawable/toggle_image.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_liked_songs.xml" value="0.165" />

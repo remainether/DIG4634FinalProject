@@ -3,6 +3,7 @@ package com.example.dig4634finalproject;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -10,6 +11,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -22,6 +24,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.gauravk.audiovisualizer.visualizer.WaveVisualizer;
+
+import java.util.ArrayList;
 
 
 public class PlaySongs extends AppCompatActivity implements SensorEventListener {
@@ -37,11 +41,20 @@ public class PlaySongs extends AppCompatActivity implements SensorEventListener 
     TextView songName;
     float myTemp = 0;
     int myHumidity =0;
-    Button playBtn, pauseBtn, stopBtn, heartBtn;
+    Button playBtn, pauseBtn, stopBtn;
+    ImageView heartBtn;
     int prevIndex  = 3;
+    int count = 0;
+    String getSongName = null;
     MediaPlayer mediaPlayer;
 
+    LikedSongs likeSong;
+    ArrayList<String> myList = new ArrayList<String>();
+
+
+
     WaveVisualizer waveVisualizer;
+
 
 
     @SuppressLint("WrongViewCast")
@@ -52,6 +65,9 @@ public class PlaySongs extends AppCompatActivity implements SensorEventListener 
         playBtn = findViewById(R.id.playButton);
         pauseBtn = findViewById(R.id.pauseButton);
         stopBtn = findViewById(R.id.stopButton);
+        heartBtn = findViewById(R.id.favButton);
+
+
         waveVisualizer = findViewById(R.id.blast);
 
         weatherIcon = (ImageView) findViewById(R.id.weatherIcon);
@@ -70,6 +86,7 @@ public class PlaySongs extends AppCompatActivity implements SensorEventListener 
         playBtn.startAnimation(half_down_fade);
         pauseBtn.startAnimation(half_down_fade);
         stopBtn.startAnimation(half_down_fade);
+        //heartBtn.startAnimation(half_down_fade);
 
         sensorManagerTemp = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
         sensorManagerTemp.registerListener(this, sensorManagerTemp.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE), sensorManagerTemp.SENSOR_DELAY_NORMAL );
@@ -121,9 +138,34 @@ public class PlaySongs extends AppCompatActivity implements SensorEventListener 
             }
         });
 
+        heartBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                heartBtn.setBackgroundResource(R.drawable.redheart);
+                myList.add(m_getSongName() + "\n");
+                Intent intent = new Intent(getApplicationContext(), LikedSongs.class);
+
+                intent.putExtra("mylist",myList);
+                startActivity(intent);
+
+
+                Runnable r = new Runnable() {
+                    @Override
+                    public void run(){
+                        heartBtn.setBackgroundResource(R.drawable.heart); //<-- put your code in here.
+                    }
+                };
+                Handler h = new Handler();
+                h.postDelayed(r, 700); // <-- the "1000" is the delay time in miliseconds.
+            }
+        });
+
+
+
 
 
     }
+
 
 
 
@@ -144,6 +186,7 @@ public class PlaySongs extends AppCompatActivity implements SensorEventListener 
         if(myTemp > 100 && myHumidity > 30 ) {
             weatherIcon.setImageResource(R.drawable.hott);
             albumCovers.setImageResource(R.drawable.hotalbum);
+
             songName.setText("Auga Viva by iZem, Nina Miranda");
             //mediaPlayer = MediaPlayer.create(PlaySongs.this, R.raw.hot);
             GlobalVariables.heatIndex = 5;
@@ -153,6 +196,7 @@ public class PlaySongs extends AppCompatActivity implements SensorEventListener 
             weatherIcon.setImageResource(R.drawable.warmm);
             albumCovers.setImageResource(R.drawable.warmalbum);
             songName.setText("Vanille fraise by L’Imperatrice");
+            getSongName = "Vanille fraise by L’Imperatrice";
             //mediaPlayer =  MediaPlayer.create(PlaySongs.this, R.raw.warm);
             GlobalVariables.heatIndex = 4;
 
@@ -161,6 +205,7 @@ public class PlaySongs extends AppCompatActivity implements SensorEventListener 
             weatherIcon.setImageResource(R.drawable.chilll);
             albumCovers.setImageResource(R.drawable.chillalbum);
             songName.setText("There Will Be Rain by Million Eyes");
+            getSongName = "There Will Be Rain by Million Eyes";
             //mediaPlayer =  MediaPlayer.create(PlaySongs.this, R.raw.chill);
             GlobalVariables.heatIndex = 3;
 
@@ -169,6 +214,7 @@ public class PlaySongs extends AppCompatActivity implements SensorEventListener 
             weatherIcon.setImageResource(R.drawable.coldd);
             albumCovers.setImageResource(R.drawable.coldalbum);
             songName.setText("Your Name by Bernache");
+            getSongName = "Your Name by Bernache";
             //mediaPlayer =  MediaPlayer.create(PlaySongs.this, R.raw.cold);
             GlobalVariables.heatIndex = 2;
 
@@ -177,6 +223,7 @@ public class PlaySongs extends AppCompatActivity implements SensorEventListener 
             weatherIcon.setImageResource(R.drawable.freezingg);
             albumCovers.setImageResource(R.drawable.freezingalbum);
             songName.setText("Smile From U. by Jinsang");
+            getSongName = "Smile From U. by Jinsang";
             //mediaPlayer = MediaPlayer.create(PlaySongs.this, R.raw.freezing);
             GlobalVariables.heatIndex = 1;
 
@@ -264,6 +311,13 @@ public class PlaySongs extends AppCompatActivity implements SensorEventListener 
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
+
+    }
+
+    public String m_getSongName(){
+
+
+        return getSongName;
 
     }
 
