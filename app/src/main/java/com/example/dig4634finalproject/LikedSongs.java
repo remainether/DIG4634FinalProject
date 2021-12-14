@@ -18,7 +18,7 @@ public class LikedSongs extends AppCompatActivity {
 
     String listString;
 
-    ArrayList<String> myList = new ArrayList<String>();
+    ArrayList<String> myList = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +29,13 @@ public class LikedSongs extends AppCompatActivity {
         //text.setText(getIntent().getStringExtra("mytext"));
         text = findViewById(R.id.textView);
         text.setText("");
+
         ArrayList<String> myList = (ArrayList<String>) getIntent().getSerializableExtra("mylist");
-        for(int i = 0; i < myList.size(); i++) {
-            text.append(myList.get(i));
+
+        if(myList != null) {
+            for (int i = 0; i < myList.size(); i++) {
+                text.append(myList.get(i));
+            }
         }
 
 
